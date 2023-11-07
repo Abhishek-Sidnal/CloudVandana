@@ -1,7 +1,7 @@
 public class Pangram {
     public static void main(String[] args) {
         String s = "Abcd efghi jklmno pqrst uvwxyz";
-        boolean result = panagram(s.toLowerCase());
+        boolean result = isPanagram(s.toLowerCase());
         if (result) {
             System.out.println(s + " is a panagram");
         } else {
@@ -9,7 +9,7 @@ public class Pangram {
         }
     }
 
-    static boolean panagram(String s) {
+    static boolean isPanagram(String s) {
         if (s.length() < 26) {
             return false;
         } else {
