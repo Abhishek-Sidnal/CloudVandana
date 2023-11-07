@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Survey Form</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="formContainer">
+            <h2>Customer Survey Form</h2>
+            <form id="surveyForm">
+                <div class="fieldContainer">
+                    <div class="group">
+                        <div class="form-field">
+                            <label for="firstName">First Name</label><br>
+                            <input type="text" id="firstName"><br>
+                        </div>
+                        <div class="form-field">
+                            <label for="lastName">Last Name</label><br>
+                            <input type="text" id="lastName"><br>
+                        </div>
+                    </div>
+
+                    <div class="group">
+                        <div class="form-field">
+                            <label for="dob">Date of Birth:</label><br>
+                            <input type="date" id="dob" required><br>
+                        </div>
+                        <div class="form-field">
+                            <label for="country">Country:</label><br>
+                            <select id="country" required>
+                                <option value="" disabled selected>Select Country</option>
+                                <option value="India">India</option>
+                                <option value="usa">USA</option>
+                                <option value="Canada">Canada</option>
+                            </select><br>
+                        </div>
+                    </div>
+                    <div class="group">
+                        <div class="form-field">
+                            <label for="email">Email:</label><br>
+                            <input type="email" id="email" required><br>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="mobile">Mobile Number:</label><br>
+                            <input type="tel" id="mobile" required><br>
+                        </div>
+                    </div>
+
+                    <div class="group">
+                        <div class="form-field">
+                            <label>Gender:</label><br>
+                            <input type="checkbox" id="male" value="male" class="gender"> Male
+                            <input type="checkbox" id="female" value="female" class="gender"> Female
+                        </div>
+
+                        <div class="form-field">
+                            <label for="profession">Profession:</label><br>
+                            <input type="text" id="profession" required><br>
+                        </div>
+                    </div>
+
+
+                    <div class="group">
+                        <div class="form-field">
+                            <p>How satisfied are you with our services?</p>
+                            <label><input type="radio" id="Satisfied" value="Satisfied" name="satisfied" class="radio">
+                                Satisfied</label>
+                            <label><input type="radio" id="Average" value="Average" name="satisfied" class="radio">
+                                Average</label>
+                            <label><input type="radio" id="Unsatisfied" value="Unsatisfied" name="satisfied"
+                                    class="radio">Unsatisfied</label>
+                        </div>
+                    </div>
+
+
+                    <div class="group">
+                        <div class="form-field">
+                            <p>Is this the first time you are using our products & services?</p>
+                            <label><input type="radio" id="yes" name="firstTime" value="Yes" class="radio">Yes</label>
+                            <label><input type="radio" id="no" name="firstTime" value="No" class="radio">No</label><br>
+                        </div>
+                    </div>
+
+                    <div class="group">
+                        <div class="form-field">
+                            <label for="feedback">Do you have any suggestions to improve our service?</label><br>
+                            <textarea name="feedback" id="feedback" cols="56" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="group">
+                        <div class="form-field group">
+                            <button type="button" class="btn" onclick="submitForm()">Submit</button>
+                            <button type="button" class="btn" onclick="resetForm()">Reset</button>
+                        </div>
+                    </div>
+            </form>
+        </div>
+
+        <div class="popup" id="popup">
+            <div class="popup-content">
+                <h2>Survey Form Submission</h2>
+                <div id="popupResult"></div>
+                <button onclick="closePopup()" class="btn">Close</button>
+            </div>
+        </div>
+</body>
+<script>
+    function submitForm() {
+        let firstName = document.getElementById('firstName').value;
+        let lastName = document.getElementById('lastName').value;
+        let dob = document.getElementById('dob').value;
+        let country = document.getElementById('country').value;
+        let email = document.getElementById('email').value;
+        let mobile = document.getElementById('mobile').value;
+        let profession = document.getElementById('profession').value;
+        let gender = '';
+        if (document.getElementById('male').checked) {
+            gender = 'Male';
+        } else if (document.getElementById('female').checked) {
+            gender = 'Female';
+        }
+        let firstTime = document.querySelector('input[name="firstTime"]:checked').value;
+        let satisfied = document.querySelector('input[name="satisfied"]:checked').value;
+        let feedback = document.getElementById('feedback').value;
+
+        let popupResult = document.getElementById('popupResult');
+        popupResult.innerHTML = `
+        <p><strong>First Name:</strong> ${firstName}</p>
+        <p><strong>Last Name:</strong> ${lastName}</p>
+        <p><strong>Date of birth:</strong> ${dob}</p>
+        <p><strong>Country:</strong> ${country}</p>
+        <p><strong>Mail:</strong> ${email}</p>
+        <p><strong>Mobile:</strong> ${mobile}</p>
+        <p><strong>Gender:</strong> ${gender}</p>
+        <p><strong>profession:</strong> ${profession}</p>
+        <p><strong>Is this the first time you are using our products & services?:</strong> ${firstTime}</p>
+        <p><strong>How satisfied are you with our services?:</strong> ${satisfied}</p>
+        <p><strong>Feedback:</strong> ${feedback}</p>
+        `;
+        let popup = document.getElementById('popup');
+        popup.style.display = 'flex';
+    }
+    function closePopup() {
+        let popup = document.getElementById('popup');
+        popup.style.display = 'none';
+        document.getElementById('surveyForm').reset();
+    }
+
+    function resetForm() {
+        document.getElementById('surveyForm').reset();
+    }
+</script>
+
+</html>
