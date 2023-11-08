@@ -18,11 +18,13 @@
                     <div class="group">
                         <div class="form-field">
                             <label for="firstName">First Name</label><br>
-                            <input type="text" id="firstName"><br>
+                            <input type="text" id="firstName" required pattern="[A-Za-z]+"
+                                title="Please enter only alphabetic characters"><br>
                         </div>
                         <div class="form-field">
                             <label for="lastName">Last Name</label><br>
-                            <input type="text" id="lastName"><br>
+                            <input type="text" id="lastName" required pattern="[A-Za-z]+"
+                                title="Please enter only alphabetic characters"><br>
                         </div>
                     </div>
 
@@ -49,7 +51,8 @@
 
                         <div class="form-field">
                             <label for="mobile">Mobile Number:</label><br>
-                            <input type="tel" id="mobile" required><br>
+                            <input type="tel" id="mobile" required pattern="[0-9]{10}"
+                                title="Please enter a 10-digit mobile number"><br>
                         </div>
                     </div>
 
@@ -96,23 +99,44 @@
                     </div>
                     <div class="group">
                         <div class="form-field group">
-                            <button type="button" class="btn" onclick="submitForm()">Submit</button>
-                            <button type="button" class="btn" onclick="resetForm()">Reset</button>
+                            <!-- <button type="button" class="btn" onclick="submitForm()">Submit</button>
+                             -->
+                            <input type="submit" class="btn">
+                            <input type="button" value="Reset" onclick="resetForm()" class="btn">
+
                         </div>
                     </div>
             </form>
-        </div>
-
-        <div class="popup" id="popup">
-            <div class="popup-content">
-                <h2>Survey Form Submission</h2>
-                <div id="popupResult"></div>
-                <button onclick="closePopup()" class="btn">Close</button>
+            <div class="popup" id="popup">
+                <div class="popup-content">
+                    <h2>Survey Form Submission</h2>
+                    <div id="popupResult"></div>
+                    <button onclick="closePopup()" class="btn">Close</button>
+                </div>
             </div>
         </div>
 </body>
 <script>
-    function submitForm() {
+
+const form = document.getElementById('surveyForm')
+form.addEventListener('submit',(e)=>
+{
+    e.preventDefault();
+    popupForm()
+})
+
+    // Validation
+    function validateForm() {
+        let firstName = document.getElementById('firstName').value;
+        var namePattern = /^[A-Za-z]+$/;
+        if (!namePattern.test(firstName)) {
+            alert("Please enter a valid first name (alphabets only).");
+            return false;
+        }
+    }
+    function popupForm() {
+        let popup = document.getElementById('popup');
+        popup.style.display = 'block';
         let firstName = document.getElementById('firstName').value;
         let lastName = document.getElementById('lastName').value;
         let dob = document.getElementById('dob').value;
@@ -129,9 +153,10 @@
         let firstTime = document.querySelector('input[name="firstTime"]:checked').value;
         let satisfied = document.querySelector('input[name="satisfied"]:checked').value;
         let feedback = document.getElementById('feedback').value;
-
         let popupResult = document.getElementById('popupResult');
-        popupResult.innerHTML = `
+        console.log(firstName)
+
+            popupResult.innerHTML = `
         <p><strong>First Name:</strong> ${firstName}</p>
         <p><strong>Last Name:</strong> ${lastName}</p>
         <p><strong>Date of birth:</strong> ${dob}</p>
@@ -144,8 +169,6 @@
         <p><strong>How satisfied are you with our services?:</strong> ${satisfied}</p>
         <p><strong>Feedback:</strong> ${feedback}</p>
         `;
-        let popup = document.getElementById('popup');
-        popup.style.display = 'flex';
     }
     function closePopup() {
         let popup = document.getElementById('popup');
